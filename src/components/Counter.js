@@ -3,15 +3,50 @@ import { connect } from 'react-redux';
 import { increment, decrement } from '../actions';
 
 class Counter extends Component {
-    incrementIfOdd = () => {
-        // Stretch Problem: Implement an increment function that
-        // only increments if the counter value is odd
-    };
+    constructor() {
+        super();
+        this.state = {
+            count: ''
+        }
+    }
 
-    incrementAsync = () => {
-        // Stretch Problem: Implement an increment function that
-        // increments after waiting for one second
-    };
+    handleChange = e => {
+        e.preventDefault()
+
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
+    increment = e => {
+        e.preventDefault()
+        const { count } = this.state
+        this.props.increment(count)
+
+        this.setState({
+            count: ''
+        })
+    }
+
+    decrement = e => {
+        e.preventDefault()
+
+        const { count } = this.state
+        this.props.decrement(count)
+
+        this.setState({
+            count: ''
+        })
+    }
+    // incrementIfOdd = () => {
+    //     // Stretch Problem: Implement an increment function that
+    //     // only increments if the counter value is odd
+    // };
+
+    // incrementAsync = () => {
+    //     // Stretch Problem: Implement an increment function that
+    //     // increments after waiting for one second
+    // };
 
     render() {
         // Fill in the two button onClick methods
@@ -20,10 +55,10 @@ class Counter extends Component {
         return (
             <p>
                 Clicked: {this.props.count} times
-                <button onClick={() => {/* Fill me in */ }}>
+                <button onClick={this.increment}>
                     +
                 </button>
-                <button onClick={() => {/* Fill me in */ }}>
+                <button onClick={this.decrement}>
                     -
                 </button>
                  {/* Uncomment these button tags if you got
@@ -45,6 +80,7 @@ class Counter extends Component {
 // this component receives the whole state. In a more complex
 // redux application, though, it would receive only the relevant
 // parts it needs from the state object.
+
 const mapStateToProps = (state) => {
     return {
         count: state.count
@@ -56,4 +92,5 @@ const mapStateToProps = (state) => {
 // is only a dumb React component. We pass in all of the functions that
 // are reliant on Redux, along with the component itself, so that Redux
 // makes itself known to this component.
+
 export default connect(mapStateToProps, { increment, decrement })(Counter);
