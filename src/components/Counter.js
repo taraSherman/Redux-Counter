@@ -10,8 +10,15 @@ class Counter extends Component {
         }
     }
 
-    increment = e => {
+    handleChange = e => {
         e.preventDefault()
+
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
+    increment = e => {
         const { count } = this.state
         this.props.increment(count)
 
@@ -21,7 +28,6 @@ class Counter extends Component {
     }
 
     decrement = e => {
-        e.preventDefault()
 
         const { count } = this.state
         this.props.decrement(count)
@@ -30,10 +36,18 @@ class Counter extends Component {
             count: ''
         })
     }
-    // incrementIfOdd = () => {
-    //     // Stretch Problem: Implement an increment function that
-    //     // only increments if the counter value is odd
-    // };
+    incrementIfOdd = () => {
+
+        if (this.props.count % 2 !== 0) {
+            this.props.increment()
+        } else {
+            this.setState({
+                count: ''
+            })
+        }
+        // Stretch Problem: Implement an increment function that
+        // only increments if the counter value is odd
+    };
 
     // incrementAsync = () => {
     //     // Stretch Problem: Implement an increment function that
@@ -53,11 +67,12 @@ class Counter extends Component {
                 <button onClick={this.decrement}>
                     -
                 </button>
-                 {/* Uncomment these button tags if you got
-                around to implementing the extra credit functions */}
-                {/* <button onClick={this.incrementIfOdd}>
+                <button onClick={this.incrementIfOdd}>
                     Increment if odd
                 </button>
+                 {/* Uncomment these button tags if you got
+                around to implementing the extra credit functions */}
+                {/* 
                 <button onClick={this.incrementAsync}>
                     Increment async
                 </button>  */}
